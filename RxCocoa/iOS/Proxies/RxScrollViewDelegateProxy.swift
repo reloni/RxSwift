@@ -21,6 +21,8 @@ public class RxScrollViewDelegateProxy
 
     fileprivate var _contentOffsetBehaviorSubject: BehaviorSubject<CGPoint>?
     fileprivate var _contentOffsetPublishSubject: PublishSubject<()>?
+	
+	fileprivate var _contentInsetBehaviorSubject: BehaviorSubject<UIEdgeInsets>?
 
     /// Typed parent object.
     public weak fileprivate(set) var scrollView: UIScrollView?
@@ -48,6 +50,17 @@ public class RxScrollViewDelegateProxy
 
         return subject
     }
+	
+	internal var contentInsetBehaviorSubject: BehaviorSubject<UIEdgeInsets> {
+		if let subject = _contentInsetBehaviorSubject {
+			return subject
+		}
+		
+		let subject = BehaviorSubject<UIEdgeInsets>(value: self.scrollView?.contentInset ?? UIEdgeInsets.zero)
+		_contentInsetBehaviorSubject = subject
+		
+		return subject
+	}
 
     /// Initializes `RxScrollViewDelegateProxy`
     ///

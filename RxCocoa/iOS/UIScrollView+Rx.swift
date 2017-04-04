@@ -44,7 +44,18 @@
 
             return ControlProperty(values: proxy.contentOffsetBehaviorSubject, valueSink: bindingObserver)
         }
-
+		
+		/// Reactive wrapper for `contentInset`.
+		public var contentInset: ControlProperty<UIEdgeInsets> {
+			let proxy = RxScrollViewDelegateProxy.proxyForObject(base)
+			
+			let bindingObserver = UIBindingObserver(UIElement: self.base) { scrollView, contentInset in
+				scrollView.contentInset = contentInset
+			}
+			
+			return ControlProperty(values: proxy.contentInsetBehaviorSubject, valueSink: bindingObserver)
+		}
+		
         /// Bindable sink for `scrollEnabled` property.
         public var isScrollEnabled: UIBindingObserver<Base, Bool> {
             return UIBindingObserver(UIElement: self.base) { scrollView, scrollEnabled in
